@@ -63,4 +63,8 @@ public class Crud {
 			ioException.printStackTrace();
 		}
 	}//end main()
+
+	public static int getID() {
+		return ID;
+	}
 }//end Crud
