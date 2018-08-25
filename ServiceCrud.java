@@ -7,8 +7,6 @@ public class ServiceCrud{
 		String titulo,tituloOriginal,pais,diretor,sinopse;
 		short ano;
 		short min;
-		
-
 
 		Scanner sc = new Scanner(System.in);
 		
