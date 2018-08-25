@@ -1,3 +1,9 @@
+/*
+ * Autor: Tulio N. Polido Lopes
+ * Data: 21/08/2018
+ * */
+
+
 import java.io.*;
 import java.util.Scanner;
 
