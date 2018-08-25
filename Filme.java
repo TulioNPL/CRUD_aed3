@@ -41,6 +41,62 @@ public class Filme {
 		this.sinopse = s;
 	}//end Filme()
 
+	public void setTitulo(String t) {
+		this.titulo = t;
+	}//end setTitulo()
+
+	public void setTituloOriginal(String tO) {
+		this.tituloOriginal = tO;
+	}//end setTituloOriginal()
+
+	public void setPais(String p) {
+		this.pais = p;
+	}//end setPais()
+
+	public void setAno(int a) {
+		this.ano = a;
+	}//end setAno()
+
+	public void setDuracao(int d) {
+		this.duracao = d;
+	}//end setDuracao()
+
+	public void setDiretor(String di) {
+		this.diretor = di;
+	}//end setDiretor()
+
+	public void setSinopse(String s) {
+		this.sinopse = s;
+	}//end setSinopse()
+
+	public String getTitulo () {
+		return this.titulo;			
+	}//end getTitulo()
+	
+	public String getTituloOriginal () {
+		return this.tituloOriginal;
+	}//end getTituloOriginal()
+
+	public String getPais () {
+		return this.pais;
+	}//end getPais()
+	
+	public int getAno () {
+		return this.ano;
+	}//end getAno()
+	
+	public int getDuracao () {
+		return this.duracao;
+	}//end getDuracao()
+	
+	public String getDiretor () {
+		return this.diretor;
+	}//end getDiretor()
+	
+	public String getSinopse () {
+		return this.sinopse;
+	}//end getSinopse()
+	
 	public byte[] getByteArray() throws IOException {
 		ByteArrayOutputStream dados = new ByteArrayOutputStream();
 		DataOutputStream saida = new DataOutputStream(dados);
