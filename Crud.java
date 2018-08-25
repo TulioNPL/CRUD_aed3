@@ -32,16 +32,16 @@ public class Crud {
 						System.out.println("Obrigado por utilizar o CRUD de filmes!");
 						break;
 					case 1:
-						incluir();
+						//cria
 						break;
 					case 2:
-						alterar();
+						//altera
 						break;
 					case 3:
-						excluir();
+						//delta
 						break;
 					case 4:
-						consultar();
+						//consulta
 						break;
 					default:
 						System.out.println("Opção inválida!");
@@ -52,20 +52,4 @@ public class Crud {
 			ioException.printStackTrace();
 		}
 	}//end main()
-
-	public static void incluir() {
-
-	}//end incluir()
-
-	public static void alterar() {
-
-	}//end alterar()
-
-	public static void excluir() {
-
-	}//end excluir()
-
-	public static void consultar() {
-
-	}//end consultar()
-}//end class
+}//end Crud
