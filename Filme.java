@@ -14,6 +14,8 @@ public class Filme {
 	private int duracao;
 	private String diretor;
 	private String sinopse;
+	private boolean lapide;
+	private int id;
 
 	/*
 	* Construtor da classe
@@ -26,12 +28,14 @@ public class Filme {
 		this.duracao = 0;
 		this.diretor = "";
 		this.sinopse = "";
+		this.lapide = false;
+		this.id = 0;
 	}//end Filme()
 
 	/*
 	* Construtor da classe com parametros iniciais
 	*/
-	public Filme(String t, String tO, String p, int a, int d, String di, String s) {
+	public Filme(String t, String tO, String p, int a, int d, String di, String s, boolean l, int id) {
 		this.titulo = t;
 		this.tituloOriginal = tO;
 		this.pais = p;
@@ -39,6 +43,8 @@ public class Filme {
 		this.duracao = d;
 		this.diretor = di;
 		this.sinopse = s;
+		this.lapide = l;
+		this.id = id;
 	}//end Filme()
 
 	public void setTitulo(String t) {
@@ -69,6 +75,10 @@ public class Filme {
 		this.sinopse = s;
 	}//end setSinopse()
 
+	public void setLapide(boolean l) {
+		this.lapide = l;
+	}//end setLapide()
+
 	public String getTitulo () {
 		return this.titulo;			
 	}//end getTitulo()
@@ -96,11 +106,21 @@ public class Filme {
 	public String getSinopse () {
 		return this.sinopse;
 	}//end getSinopse()
+
+	public boolean getLapide() {
+		return this.lapide;
+	}//end getLapide()
+
+	public int getId() {
+		return this.id;
+	}//end getId()
 	
 	public byte[] getByteArray() throws IOException {
 		ByteArrayOutputStream dados = new ByteArrayOutputStream();
 		DataOutputStream saida = new DataOutputStream(dados);
-		
+	
+		saida.writeInt(this.id);
+		saida.writeBoolean(this.lapide);	
 		saida.writeUTF(this.titulo);
 		saida.writeUTF(this.tituloOriginal);
 		saida.writeUTF(this.pais);
@@ -116,6 +136,8 @@ public class Filme {
 		ByteArrayInputStream dados = new ByteArrayInputStream(bytes);
 		DataInputStream entrada = new DataInputStream(dados);
 
+		this.id = entrada.readInt();
+		this.lapide = entrada.readBoolean();
 		this.titulo = entrada.readUTF();
 		this.tituloOriginal = entrada.readUTF();
 		this.pais = entrada.readUTF();
