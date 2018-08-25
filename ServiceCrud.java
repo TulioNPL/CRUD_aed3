@@ -1,13 +1,15 @@
 import java.util.Scanner;
 
-class ServiceCrud{
+public class ServiceCrud{
 
-	public void create(){
+	public static void create(){
 		
 		String titulo,tituloOriginal,pais,diretor,sinopse;
 		short ano;
-		byte min;
+		short min;
 		
+
+
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.print("Titulo: ");
@@ -24,6 +26,15 @@ class ServiceCrud{
 		
 		System.out.print("Sinopse :");
 		sinopse = sc.nextLine();
+
+		System.out.print("Ano:");
+		ano = sc.nextShort();
+
+		System.out.print("Minutos filme:");
+
+		min = sc.nextShort();
+
+		System.out.print("Insira 1 para confirma inclusão ou 0 para cancelar :");
 		
 	}
 	public void delete(){}

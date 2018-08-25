@@ -32,7 +32,7 @@ public class Crud {
 						System.out.println("Obrigado por utilizar o CRUD de filmes!");
 						break;
 					case 1:
-						//cria
+						ServiceCrud.create();
 						break;
 					case 2:
 						//altera

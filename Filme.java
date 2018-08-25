@@ -10,8 +10,8 @@ public class Filme {
 	private String titulo;
 	private String tituloOriginal;
 	private String pais;
-	private int ano;
-	private int duracao;
+	private short ano;
+	private short duracao;
 	private String diretor;
 	private String sinopse;
 
@@ -31,7 +31,7 @@ public class Filme {
 	/*
 	* Construtor da classe com parametros iniciais
 	*/
-	public Filme(String t, String tO, String p, int a, int d, String di, String s) {
+	public Filme(String t, String tO, String p, short a, short d, String di, String s) {
 		this.titulo = t;
 		this.tituloOriginal = tO;
 		this.pais = p;
@@ -53,11 +53,11 @@ public class Filme {
 		this.pais = p;
 	}//end setPais()
 
-	public void setAno(int a) {
+	public void setAno(short a) {
 		this.ano = a;
 	}//end setAno()
 
-	public void setDuracao(int d) {
+	public void setDuracao(short d) {
 		this.duracao = d;
 	}//end setDuracao()
 
@@ -104,8 +104,8 @@ public class Filme {
 		saida.writeUTF(this.titulo);
 		saida.writeUTF(this.tituloOriginal);
 		saida.writeUTF(this.pais);
-		saida.writeInt(this.ano);
-		saida.writeInt(this.duracao);
+		saida.writeShort(this.ano);
+		saida.writeShort(this.duracao);
 		saida.writeUTF(this.diretor);
 		saida.writeUTF(this.sinopse);
 
@@ -119,8 +119,8 @@ public class Filme {
 		this.titulo = entrada.readUTF();
 		this.tituloOriginal = entrada.readUTF();
 		this.pais = entrada.readUTF();
-		this.ano = entrada.readInt();
-		this.duracao = entrada.readInt();
+		this.ano = entrada.readShort();
+		this.duracao = entrada.readShort();
 		this.diretor = entrada.readUTF();
 		this.sinopse = entrada.readUTF();
 	}//end setByteArray()
