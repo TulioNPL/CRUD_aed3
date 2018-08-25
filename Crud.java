@@ -8,6 +8,9 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Crud {
+
+	private static int ID = 0;
+
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		int choice = -1;
@@ -15,8 +18,16 @@ public class Crud {
 
 		System.out.println("Bem-vindo ao CRUD de filmes!");
 		try{	
-			raf = new RandomAccessFile("filmes.db","rw");
-
+			File tmpFile = new File("filmes.db");
+			
+			if(tmpFile.exists()) { //confere se o arquivo existe, se sim le o ID, caso contrario, cria um arquivo
+				raf = new RandomAccessFile("filmes.db","rw");
+				ID = raf.readInt();
+			} else {
+				raf = new RandomAccessFile("filmes.db","rw");	
+				raf.writeInt(ID);
+			}
+			
 			while(choice != 0) { 
 				System.out.println("Menu:\n"+
 						"0 - Sair;\n"+
