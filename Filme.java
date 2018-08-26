@@ -15,6 +15,7 @@ public class Filme {
 	private boolean lapide;
 
 	public Filme() {
+		this.id = -1;
 		this.titulo = "";
 		this.tituloOriginal = "";
 		this.pais = "";
@@ -22,6 +23,7 @@ public class Filme {
 		this.duracao = 0;
 		this.diretor = "";
 		this.sinopse = "";
+		this.lapide = false;
 	}
 
 	public Filme(String titulo, String tituloOriginal, String pais, short ano, short duracao, String diretor, String sinopse,int id) {
@@ -94,6 +96,14 @@ public class Filme {
 	public String getSinopse () {
 		return this.sinopse;
 	}
+
+	public int getID() {
+		return this.id;
+	}
+
+	public boolean getLapide() {
+		return this.lapide;
+	}
 	
 	public byte[] getByteArray() throws IOException {
 		ByteArrayOutputStream dados = new ByteArrayOutputStream();
@@ -113,7 +123,7 @@ public class Filme {
 		return dados.toByteArray();
 	}
 
-	private void setByteArray(byte[] bytes) throws IOException {
+	public void setByteArray(byte[] bytes) throws IOException {
 		ByteArrayInputStream dados = new ByteArrayInputStream(bytes);
 		DataInputStream entrada = new DataInputStream(dados);
 
@@ -139,7 +149,7 @@ public class Filme {
 		raf.write(dados);
 	}
 
-	public void ToString(){
-		System.out.println("Titulo :"+titulo+" \nTitulo Original :"+tituloOriginal+"\nDiretor :"+diretor+"\nPais :"+pais+"\nDuracao :"+duracao+"\nAno :"+ano+"\nSinopse :"+sinopse);
+	public String ToString(){
+		return ("Titulo :"+titulo+" \nTitulo Original :"+tituloOriginal+"\nDiretor :"+diretor+"\nPais :"+pais+"\nDuracao :"+duracao+"\nAno :"+ano+"\nSinopse :"+sinopse);
 	}
 }

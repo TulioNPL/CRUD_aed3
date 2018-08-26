@@ -32,7 +32,7 @@ public class Crud {
 
 				switch(choice) {
 					case 0:
-						//DoT.close();
+						arq.close();
 						System.out.println("Obrigado por utilizar o CRUD de filmes!");
 						break;
 					case 1:
@@ -45,7 +45,7 @@ public class Crud {
 						//delta
 						break;
 					case 4:
-						//consulta
+						ServiceCrud.pesquisa(arq);
 						break;
 					default:
 						System.out.println("Opção inválida!");

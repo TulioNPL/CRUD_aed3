@@ -47,12 +47,12 @@ public class ServiceCrud{
 					id = 0;
 				else{
 					arq.seek(0);
-					id = arq.readShort();
+					id = arq.readInt();
 					id++;
 				}
 		
 				arq.seek(0);
-				arq.writeShort(id);
+				arq.writeInt(id);
 				arq.seek(arq.length());
 				Filme filme = new Filme(titulo,tituloOriginal,pais,ano,min,diretor,sinopse,id);
 				filme.writeObject(arq);
@@ -69,29 +69,55 @@ public class ServiceCrud{
 	
 		
 
-	}
-	public static void update(RandomAccessFile arq){}
-	public static void read(RandomAccessFile arq){
+	}//end delete()
+	
+	public static void update(RandomAccessFile arq){
+	
+	}//end update()
+
+
+	public static void pesquisa (RandomAccessFile arq){
 
 		System.out.print("Insira o ID do filme a ser pesquisado :");
 		int idP = sc.nextInt();
+		boolean resp = false;
+		int tamVet;
+		byte[] registro;
+		int auxid;
+		Filme aux = new Filme();
+		
 
 		try{
 
 			if(arq.length()!= 0){
-				arq.seek(2);
-				int tamanhoR = arq.readShort();
-				
-				boolean lapide = arq.readBoolean();
-				
+				arq.seek(4);	//vai para o primeiro byte apos o cabecalho	
+			} else {
+				System.out.println("ERRO na pesquisa: Arquivo vazio!");
 			}
-			else{
-				System.out.println("ERRO na pesquisa : Arquivo vazio!");
-			}
+			while(!resp) {
+				tamVet = arq.readShort();		
+				registro = new byte[tamVet];
+				for(int i = 0; i < tamVet; i++) {
+					registro[i] = arq.readByte();
+				}
+				aux.setByteArray(registro);
+System.out.println("PARADA 1");
+				if(!aux.getLapide()) {
+					auxid = aux.getID();
+System.out.println("PARADA 2");
 
-		}catch(IOException e){
+					System.out.println(auxid);
+System.out.println("PARADA 3");
+					if(auxid == idP) {
+						resp = true;
+					}
+				}
+
+
+			}
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}//end read()
 
 }
