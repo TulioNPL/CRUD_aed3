@@ -43,49 +43,55 @@ public class ServiceCrud{
 			
 			int id;
 			try{
+				if(arq.length() == 0)
+					id = 0;
+				else{
+					arq.seek(0);
+					id = arq.readShort();
+					id++;
+				}
+		
 				arq.seek(0);
-				id = arq.readShort();
-				id++;
-				arq.seek(0);
-			}
-			catch(Exception e){
-				id = 0;
-				
-			}	
-			try{
 				arq.writeShort(id);
 				arq.seek(arq.length());
 				Filme filme = new Filme(titulo,tituloOriginal,pais,ano,min,diretor,sinopse,id);
 				filme.writeObject(arq);
-				
 			}
 			catch(Exception e){
 				e.printStackTrace();
-			}
+				
+			}	
 
 		}
 	}
 	public static void delete(RandomAccessFile arq){
 		
-		System.out.print("Insira o ID do filme a ser excluído :");
-		int idExcluir = sc.nextInt();
-
-		if(arq.length()!=0){
-			try{
-				arq.seek(4);
-				int tamanhoR = arq.readShort();
-			}
-			catch(IOException e){
-				e.printStackTrace();
-			}
-		}
-		else{
-			System.out.println("ERROR : Arquivo vazio!");
-		}
+	
 		
 
 	}
 	public static void update(RandomAccessFile arq){}
-	public static void read(RandomAccessFile arq){}
+	public static void read(RandomAccessFile arq){
+
+		System.out.print("Insira o ID do filme a ser pesquisado :");
+		int idP = sc.nextInt();
+
+		try{
+
+			if(arq.length()!= 0){
+				arq.seek(2);
+				int tamanhoR = arq.readShort();
+				
+				boolean lapide = arq.readBoolean();
+				
+			}
+			else{
+				System.out.println("ERRO na pesquisa : Arquivo vazio!")
+			}
+
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
 
 }
