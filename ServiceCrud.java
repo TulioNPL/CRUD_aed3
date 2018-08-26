@@ -10,23 +10,23 @@ public class ServiceCrud{
 	private static Scanner sc = new Scanner(System.in);
 
 	public static void create(RandomAccessFile arq){
-		
+
 		String titulo,tituloOriginal,pais,diretor,sinopse;
 		short ano;
 		short min;
 
 		System.out.print("Titulo: ");
 		titulo = sc.nextLine();
-		
+
 		System.out.print("Titulo Original :");
 		tituloOriginal = sc.nextLine();
-		
+
 		System.out.print("Pais de origem :");
 		pais = sc.nextLine();
-		
+
 		System.out.print("Diretor : ");
 		diretor = sc.nextLine();
-		
+
 		System.out.print("Sinopse :");
 		sinopse = sc.nextLine();
 
@@ -40,7 +40,7 @@ public class ServiceCrud{
 		System.out.print("Insira 1 para confirma inclusão ou 0 para cancelar :");
 
 		if(sc.nextByte() == 1){
-			
+
 			int id;
 			try{
 				if(arq.length() == 0)
@@ -50,7 +50,7 @@ public class ServiceCrud{
 					id = arq.readInt();
 					id++;
 				}
-		
+
 				arq.seek(0);
 				arq.writeInt(id);
 				arq.seek(arq.length());
@@ -59,20 +59,20 @@ public class ServiceCrud{
 			}
 			catch(Exception e){
 				e.printStackTrace();
-				
+
 			}	
 
 		}
 	}
 	public static void delete(RandomAccessFile arq){
-		
-	
-		
+
+
+
 
 	}//end delete()
-	
+
 	public static void update(RandomAccessFile arq){
-	
+
 	}//end update()
 
 
@@ -81,11 +81,11 @@ public class ServiceCrud{
 		System.out.print("Insira o ID do filme a ser pesquisado :");
 		int idP = sc.nextInt();
 		boolean resp = false;
-		int tamVet;
+		short tamVet;
 		byte[] registro;
 		int auxid;
 		Filme aux = new Filme();
-		
+
 
 		try{
 
@@ -95,25 +95,22 @@ public class ServiceCrud{
 				System.out.println("ERRO na pesquisa: Arquivo vazio!");
 			}
 			while(!resp) {
-				tamVet = arq.readShort();		
-				registro = new byte[tamVet];
-				for(int i = 0; i < tamVet; i++) {
+				tamVet = arq.readShort();	//le o tam do registro		
+				registro = new byte[tamVet];	//cria um vetor de bytes com tamanho do registro
+
+				for(short i = 0; i < tamVet; i++) {	//le byte a byte e grava no vetor
 					registro[i] = arq.readByte();
 				}
+
 				aux.setByteArray(registro);
-System.out.println("PARADA 1");
 				if(!aux.getLapide()) {
 					auxid = aux.getID();
-System.out.println("PARADA 2");
 
 					System.out.println(auxid);
-System.out.println("PARADA 3");
 					if(auxid == idP) {
 						resp = true;
 					}
 				}
-
-
 			}
 		} catch(IOException e) {
 			e.printStackTrace();
