@@ -3,10 +3,8 @@
  * */
 import java.io.*;
 
-/*
- * Classe que descreve Filmes a serem manipulador por um CRUD
- * */
 public class Filme {
+	private int id;
 	private String titulo;
 	private String tituloOriginal;
 	private String pais;
@@ -14,10 +12,9 @@ public class Filme {
 	private short duracao;
 	private String diretor;
 	private String sinopse;
+	private boolean lapide;
 
-	/*
-	* Construtor da classe
-	*/
+
 	public Filme() {
 		this.titulo = "";
 		this.tituloOriginal = "";
@@ -26,81 +23,85 @@ public class Filme {
 		this.duracao = 0;
 		this.diretor = "";
 		this.sinopse = "";
-	}//end Filme()
+	}
 
-	/*
-	* Construtor da classe com parametros iniciais
-	*/
-	public Filme(String t, String tO, String p, short a, short d, String di, String s) {
-		this.titulo = t;
-		this.tituloOriginal = tO;
-		this.pais = p;
-		this.ano = a;
-		this.duracao = d;
-		this.diretor = di;
-		this.sinopse = s;
-	}//end Filme()
+	public Filme(String titulo, String tituloOriginal, String pais, short ano, short duracao, String diretor, String sinopse,int id) {
+		this.titulo = titulo;
+		this.tituloOriginal = tituloOriginal;
+		this.pais = pais;
+		this.ano = ano;
+		this.duracao = duracao;
+		this.diretor = diretor;
+		this.sinopse = sinopse;
+		this.id = id;
+		this.lapide = false;
+	}
 
-	public void setTitulo(String t) {
-		this.titulo = t;
-	}//end setTitulo()
+	public void setLapide(boolean lapide){
+		this.lapide = lapide;
+	}
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
 
-	public void setTituloOriginal(String tO) {
-		this.tituloOriginal = tO;
-	}//end setTituloOriginal()
+	public void setTituloOriginal(String tituloOriginal) {
+		this.tituloOriginal = tituloOriginal;
+	}
 
-	public void setPais(String p) {
-		this.pais = p;
-	}//end setPais()
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
 
-	public void setAno(short a) {
-		this.ano = a;
-	}//end setAno()
+	public void setAno(short ano) {
+		this.ano = ano;
+	}
 
-	public void setDuracao(short d) {
-		this.duracao = d;
-	}//end setDuracao()
+	public void setDuracao(short duracao) {
+		this.duracao = duracao;
+	}
 
-	public void setDiretor(String di) {
-		this.diretor = di;
-	}//end setDiretor()
+	public void setDiretor(String diretor) {
+		this.diretor = diretor;
+	}
 
-	public void setSinopse(String s) {
-		this.sinopse = s;
-	}//end setSinopse()
+	public void setSinopse(String sinopse) {
+		this.sinopse = sinopse;
+	}
 
 	public String getTitulo () {
 		return this.titulo;			
-	}//end getTitulo()
+	}
 	
 	public String getTituloOriginal () {
 		return this.tituloOriginal;
-	}//end getTituloOriginal()
+	}
 
 	public String getPais () {
 		return this.pais;
-	}//end getPais()
+	}
 	
 	public int getAno () {
 		return this.ano;
-	}//end getAno()
+	}
 	
 	public int getDuracao () {
 		return this.duracao;
-	}//end getDuracao()
+	}
 	
 	public String getDiretor () {
 		return this.diretor;
-	}//end getDiretor()
+	}
 	
 	public String getSinopse () {
 		return this.sinopse;
-	}//end getSinopse()
+	}
 	
 	public byte[] getByteArray() throws IOException {
 		ByteArrayOutputStream dados = new ByteArrayOutputStream();
 		DataOutputStream saida = new DataOutputStream(dados);
 		
+		saida.writeBoolean(this.lapide);
+		saida.writeInt(this.id);
 		saida.writeUTF(this.titulo);
 		saida.writeUTF(this.tituloOriginal);
 		saida.writeUTF(this.pais);
@@ -108,14 +109,17 @@ public class Filme {
 		saida.writeShort(this.duracao);
 		saida.writeUTF(this.diretor);
 		saida.writeUTF(this.sinopse);
+		
 
 		return dados.toByteArray();
-	}//end getByteArray()
+	}
 
-	public void setByteArray(byte[] bytes) throws IOException {
+	private void setByteArray(byte[] bytes) throws IOException {
 		ByteArrayInputStream dados = new ByteArrayInputStream(bytes);
 		DataInputStream entrada = new DataInputStream(dados);
 
+		this.lapide = entrada.readBoolean();
+		this.id = entrada.readInt();
 		this.titulo = entrada.readUTF();
 		this.tituloOriginal = entrada.readUTF();
 		this.pais = entrada.readUTF();
@@ -123,13 +127,20 @@ public class Filme {
 		this.duracao = entrada.readShort();
 		this.diretor = entrada.readUTF();
 		this.sinopse = entrada.readUTF();
-	}//end setByteArray()
+		
+	}
 
 	public void readObject(RandomAccessFile raf) throws IOException {
 		
-	}//end readObject()
+	}
 
 	public void writeObject(RandomAccessFile raf) throws IOException {
+		byte[] dados = this.getByteArray();
+		raf.writeShort(dados.length);
+		raf.write(dados);
+	}
 
-	}//end writeObject()
-}//end filme
+	public void ToString(){
+		System.out.println("Titulo :"+titulo+" \nTitulo Original :"+tituloOriginal+"\nDiretor :"+diretor+"\nPais :"+pais+"\nDuracao :"+duracao+"\nAno :"+ano+"\nSinopse :"+sinopse);
+	}
+}

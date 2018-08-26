@@ -11,11 +11,12 @@ public class Crud {
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		int choice = -1;
-		RandomAccessFile raf;
+
+		RandomAccessFile arq;
 
 		System.out.println("Bem-vindo ao CRUD de filmes!");
 		try{	
-			raf = new RandomAccessFile("filmes.db","rw");
+			arq = new RandomAccessFile("filme.db","rw");
 
 			while(choice != 0) { 
 				System.out.println("Menu:\n"+
@@ -28,13 +29,13 @@ public class Crud {
 
 				switch(choice) {
 					case 0:
-						raf.close();
+						//DoT.close();
 						System.out.println("Obrigado por utilizar o CRUD de filmes!");
 						break;
 					case 1:
-						ServiceCrud.create();
+						ServiceCrud.create(arq);
 						break;
-					case 2:
+					case 2:	
 						//altera
 						break;
 					case 3:
@@ -51,5 +52,5 @@ public class Crud {
 		} catch (IOException ioException ) {
 			ioException.printStackTrace();
 		}
-	}//end main()
-}//end Crud
+	}
+}
