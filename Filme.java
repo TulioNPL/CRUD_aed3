@@ -14,7 +14,6 @@ public class Filme {
 	private String sinopse;
 	private boolean lapide;
 
-
 	public Filme() {
 		this.titulo = "";
 		this.tituloOriginal = "";
@@ -67,6 +66,10 @@ public class Filme {
 	public void setSinopse(String sinopse) {
 		this.sinopse = sinopse;
 	}
+
+	public void setLapide(boolean l) {
+		this.lapide = l;
+	}//end setLapide()
 
 	public String getTitulo () {
 		return this.titulo;			

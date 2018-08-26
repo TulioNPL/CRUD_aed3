@@ -8,6 +8,9 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Crud {
+
+	private static int ID = 0;
+
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		int choice = -1;
