@@ -86,7 +86,7 @@ public class ServiceCrud{
 				
 			}
 			else{
-				System.out.println("ERRO na pesquisa : Arquivo vazio!")
+				System.out.println("ERRO na pesquisa : Arquivo vazio!");
 			}
 
 		}catch(IOException e){
