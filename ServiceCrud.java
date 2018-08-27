@@ -15,6 +15,8 @@ public class ServiceCrud{
 		short ano;
 		short min;
 
+		sc.nextLine();
+
 		System.out.print("Titulo: ");
 		titulo = sc.nextLine();
 
@@ -80,7 +82,7 @@ public class ServiceCrud{
 
 		System.out.print("Insira o ID do filme a ser pesquisado :");
 		int idP = sc.nextInt();
-		boolean resp = false;
+		boolean continuar = true;
 		short tamVet;
 		byte[] registro;
 		int auxid;
@@ -94,7 +96,7 @@ public class ServiceCrud{
 			} else {
 				arq.seek(4);
 
-			//	while(!resp) {
+				while(continuar) {
 					tamVet = arq.readShort();	//le o tam do registro
 					registro = new byte[tamVet];	//cria um vetor de bytes com tamanho do registro
 
@@ -112,14 +114,17 @@ public class ServiceCrud{
 							System.out.println("\nO filme pesquisado é:");
 							System.out.println(aux);
 							System.out.println();
+							continuar = false;
 						}
 					}
 					
-			//	}
+				}
 			}
+		} catch(EOFException E) { 
+			System.out.println("Filme não encontrado!");
 		} catch(IOException e) {
 			e.printStackTrace();
-		}
+		} 
 	}//end read()
 
 }
