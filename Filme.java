@@ -24,7 +24,7 @@ public class Filme {
 		this.diretor = "";
 		this.sinopse = "";
 		this.lapide = false;
-	}
+	}//end Filme()
 
 	public Filme(String titulo, String tituloOriginal, String pais, short ano, short duracao, String diretor, String sinopse,int id) {
 		this.titulo = titulo;
@@ -36,7 +36,7 @@ public class Filme {
 		this.sinopse = sinopse;
 		this.id = id;
 		this.lapide = false;
-	}
+	}//end Filme()
 
 	public void setLapide(boolean lapide){
 		this.lapide = lapide;
@@ -121,7 +121,7 @@ public class Filme {
 		
 
 		return dados.toByteArray();
-	}
+	}//end getByteArray()
 
 	public void setByteArray(byte[] bytes) throws IOException {
 		ByteArrayInputStream dados = new ByteArrayInputStream(bytes);
@@ -137,19 +137,27 @@ public class Filme {
 		this.diretor = entrada.readUTF();
 		this.sinopse = entrada.readUTF();
 		
-	}
+	}//end setByteArray()
 
 	public void readObject(RandomAccessFile raf) throws IOException {
 			
-	}
+	}//end readObject()
 
 	public void writeObject(RandomAccessFile raf) throws IOException {
 		byte[] dados = this.getByteArray();
 		raf.writeShort(dados.length);
 		raf.write(dados);
-	}
+	}//end writeObject()
 
-	public String ToString(){
-		return ("Titulo :"+titulo+" \nTitulo Original :"+tituloOriginal+"\nDiretor :"+diretor+"\nPais :"+pais+"\nDuracao :"+duracao+"\nAno :"+ano+"\nSinopse :"+sinopse);
-	}
+	public String toString(){
+		return "Titulo: "+this.titulo+
+			"\nTitulo Original: "+this.tituloOriginal+
+			"\nDiretor: "+this.diretor+
+			"\nPais: "+this.pais+
+			"\nDuracao: "+this.duracao+
+			"\nAno: "+this.ano+
+			"\nSinopse: "+this.sinopse+
+			"\nID: "+this.id;
+
+	}//end toString()
 }
