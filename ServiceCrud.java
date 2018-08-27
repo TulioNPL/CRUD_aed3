@@ -15,8 +15,6 @@ public class ServiceCrud{
 		short ano;
 		short min;
 
-		sc.nextLine();
-
 		System.out.print("Titulo: ");
 		titulo = sc.nextLine();
 
