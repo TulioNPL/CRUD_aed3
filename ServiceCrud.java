@@ -6,10 +6,11 @@ import java.util.Scanner;
 import java.io.*;
 
 public class ServiceCrud{
-	private static Scanner sc = new Scanner(System.in);
+	private static Scanner sc;
 
 	public static void create(RandomAccessFile arq){
 
+		sc = new Scanner(System.in);
 		String titulo,tituloOriginal,pais,diretor,sinopse;
 		short ano;
 		short min;
@@ -60,18 +61,17 @@ public class ServiceCrud{
 	}//end create()
 
 	public static void delete(RandomAccessFile arq){
-
-
-
+		sc = new Scanner(System.in);
 
 	}//end delete()
 
 	public static void update(RandomAccessFile arq){
+		sc = new Scanner(System.in);
 
 	}//end update()
 
 	public static void pesquisa (RandomAccessFile arq){
-
+		sc = new Scanner(System.in);
 		System.out.print("Insira o ID do filme a ser pesquisado :");
 		int idP = sc.nextInt();
 		boolean continuar = true;
