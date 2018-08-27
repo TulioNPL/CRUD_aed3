@@ -1,4 +1,4 @@
-/* Autor: João Victor da Silva
+/* Autores: João Victor da Silva, Tulio N. Polido Lopes, Temistocles Altivo Schwartz, Gustavo Lescowicz Kotarsky
  * Data: 26/08/2018
  * */
 
@@ -6,7 +6,6 @@ import java.util.Scanner;
 import java.io.*;
 
 public class ServiceCrud{
-
 	private static Scanner sc = new Scanner(System.in);
 
 	public static void create(RandomAccessFile arq){
@@ -18,27 +17,25 @@ public class ServiceCrud{
 		System.out.print("Titulo: ");
 		titulo = sc.nextLine();
 
-		System.out.print("Titulo Original :");
+		System.out.print("Titulo Original: ");
 		tituloOriginal = sc.nextLine();
 
-		System.out.print("Pais de origem :");
+		System.out.print("Pais de origem: ");
 		pais = sc.nextLine();
 
-		System.out.print("Diretor : ");
+		System.out.print("Diretor: ");
 		diretor = sc.nextLine();
 
-		System.out.print("Sinopse :");
+		System.out.print("Sinopse: ");
 		sinopse = sc.nextLine();
 
-		System.out.print("Ano:");
+		System.out.print("Ano: ");
 		ano = sc.nextShort();
 
-		System.out.print("Minutos filme:");
-
+		System.out.print("Minutos filme: ");
 		min = sc.nextShort();
 
-		System.out.print("Insira 1 para confirma inclusão ou 0 para cancelar :");
-
+		System.out.print("Insira 1 para confirma inclusão ou 0 para cancelar: ");
 		if(sc.nextByte() == 1){
 
 			int id;
@@ -56,14 +53,12 @@ public class ServiceCrud{
 				arq.seek(arq.length());
 				Filme filme = new Filme(titulo,tituloOriginal,pais,ano,min,diretor,sinopse,id);
 				filme.writeObject(arq);
-			}
-			catch(Exception e){
+			} catch(Exception e) {
 				e.printStackTrace();
-
 			}	
+		} 
+	}//end create()
 
-		}
-	}
 	public static void delete(RandomAccessFile arq){
 
 
@@ -74,7 +69,6 @@ public class ServiceCrud{
 	public static void update(RandomAccessFile arq){
 
 	}//end update()
-
 
 	public static void pesquisa (RandomAccessFile arq){
 
@@ -123,6 +117,5 @@ public class ServiceCrud{
 		} catch(IOException e) {
 			e.printStackTrace();
 		} 
-	}//end read()
-
-}
+	}//end pesquisa()
+}//end ServiceCrud

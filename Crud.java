@@ -1,5 +1,5 @@
 /*
- * Autor: Tulio N. Polido Lopes
+ * Autores: Tulio N. Polido Lopes, Joao Victor da Silva, Gustavo Lescowicz Kotarsky, Temistocles Altivo Schwartz
  * Data: 21/08/2018
  * */
 
@@ -52,5 +52,5 @@ public class Crud {
 		} catch (IOException ioException ) {
 			ioException.printStackTrace();
 		}
-	}
-}
+	}//end main()
+}//end Crud

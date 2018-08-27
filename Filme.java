@@ -1,4 +1,4 @@
-/* Autor: Tulio N. Polido Lopes
+/* Autores: Tulio N. Polido Lopes, Joao Victor da Silva, Gustavo Lescowicz Kotarsky, Temistocles Altivo Schwartz 
  * Data: 21/08/2018
  * */
 import java.io.*;
@@ -138,10 +138,6 @@ public class Filme {
 		this.sinopse = entrada.readUTF();
 		
 	}//end setByteArray()
-
-	public void readObject(RandomAccessFile raf) throws IOException {
-			
-	}//end readObject()
 
 	public void writeObject(RandomAccessFile raf) throws IOException {
 		byte[] dados = this.getByteArray();
