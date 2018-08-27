@@ -61,8 +61,46 @@ public class ServiceCrud{
 	}//end create()
 
 	public static void delete(RandomAccessFile arq){
+		System.out.print("Insira o ID do filme a ser deletado: ");
 		sc = new Scanner(System.in);
-
+		short id = sc.nextByte();
+		long tamFilme, pos;
+		String resp="";
+		try{
+			//Verifica se o arquivo estava vazio
+			if(arq.length() != 0){
+				arq.seek(0);
+				for(int idArq = 0, idMax = arq.readInt() ; idArq <= id && idArq <= idMax  ; idArq++){
+					//Le o tamanho do filme
+					tamFilme = arq.readShort();
+					//Le a posiçao do ponteiro
+					pos = arq.getFilePointer();
+					//Verifica se o ID encontrado é o ID procurado,
+					if (idArq == id){
+						//Verifica se o arquivo já estava morto
+						if( !arq.readBoolean() ){
+							//Caso esteja, volta uma posiçao e adiciona a lapide
+							arq.seek( pos );
+							arq.writeBoolean(true);
+							resp = "Filme deletado!";
+						}
+						else
+							resp = "Filme ja havia sido deletado! Nenhuma modificação feita";
+					}
+					else{
+						resp = "Filme não encontrado";
+					}
+					arq.seek( pos + tamFilme );
+				}
+			}
+			else{
+				resp ="Arquivo vazio";
+			}
+		}
+		catch(Exception e){
+			System.out.print("\nErro ao encontrar arquivo");
+		}
+		System.out.println( resp );
 	}//end delete()
 
 	public static void update(RandomAccessFile arq){
