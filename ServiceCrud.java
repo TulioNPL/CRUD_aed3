@@ -89,28 +89,33 @@ public class ServiceCrud{
 
 		try{
 
-			if(arq.length()!= 0){
-				arq.seek(4);	//vai para o primeiro byte apos o cabecalho	
-			} else {
+			if(arq.length() == 0){
 				System.out.println("ERRO na pesquisa: Arquivo vazio!");
-			}
-			while(!resp) {
-				tamVet = arq.readShort();	//le o tam do registro		
-				registro = new byte[tamVet];	//cria um vetor de bytes com tamanho do registro
+			} else {
+				arq.seek(4);
 
-				for(short i = 0; i < tamVet; i++) {	//le byte a byte e grava no vetor
-					registro[i] = arq.readByte();
-				}
+			//	while(!resp) {
+					tamVet = arq.readShort();	//le o tam do registro
+					registro = new byte[tamVet];	//cria um vetor de bytes com tamanho do registro
 
-				aux.setByteArray(registro);
-				if(!aux.getLapide()) {
-					auxid = aux.getID();
-
-					System.out.println(auxid);
-					if(auxid == idP) {
-						resp = true;
+					for(short i = 0; i < tamVet; i++) {	//le byte a byte e grava no vetor
+						registro[i] = arq.readByte();
 					}
-				}
+
+					aux.setByteArray(registro);
+					
+					if(!aux.getLapide()) {
+						auxid = aux.getID();
+
+						System.out.println(auxid);
+						if(auxid == idP) {
+							System.out.println("\nO filme pesquisado é:");
+							System.out.println(aux);
+							System.out.println();
+						}
+					}
+					
+			//	}
 			}
 		} catch(IOException e) {
 			e.printStackTrace();
