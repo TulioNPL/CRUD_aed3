@@ -139,7 +139,6 @@ public class ServiceCrud{
 					if(!aux.getLapide()) {
 						auxid = aux.getID();
 
-						System.out.println(auxid);
 						if(auxid == idP) {
 							System.out.println("\nO filme pesquisado é:");
 							System.out.println(aux);
