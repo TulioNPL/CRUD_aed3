@@ -12,18 +12,8 @@ public class Filme {
 	private short duracao;
 	private String diretor;
 	private String sinopse;
-	private boolean lapide;
 
 	public Filme() {
-		this.id = -1;
-		this.titulo = "";
-		this.tituloOriginal = "";
-		this.pais = "";
-		this.ano = 0;
-		this.duracao = 0;
-		this.diretor = "";
-		this.sinopse = "";
-		this.lapide = false;
 	}//end Filme()
 
 	public Filme(String titulo, String tituloOriginal, String pais, short ano, short duracao, String diretor, String sinopse,int id) {
@@ -35,12 +25,18 @@ public class Filme {
 		this.diretor = diretor;
 		this.sinopse = sinopse;
 		this.id = id;
-		this.lapide = false;
 	}//end Filme()
 
-	public void setLapide(boolean lapide){
-		this.lapide = lapide;
-	}
+	public Filme(String titulo, String tituloOriginal, String pais, short ano, short duracao, String diretor, String sinopse) {
+		this.titulo = titulo;
+		this.tituloOriginal = tituloOriginal;
+		this.pais = pais;
+		this.ano = ano;
+		this.duracao = duracao;
+		this.diretor = diretor;
+		this.sinopse = sinopse;
+	}//end Filme()
+
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
@@ -63,6 +59,10 @@ public class Filme {
 
 	public void setDiretor(String diretor) {
 		this.diretor = diretor;
+	}
+
+	public void setId(int id){
+		this.id = id;
 	}
 
 	public void setSinopse(String sinopse) {
@@ -100,16 +100,11 @@ public class Filme {
 	public int getID() {
 		return this.id;
 	}
-
-	public boolean getLapide() {
-		return this.lapide;
-	}
 	
 	public byte[] getByteArray() throws IOException {
 		ByteArrayOutputStream dados = new ByteArrayOutputStream();
 		DataOutputStream saida = new DataOutputStream(dados);
 		
-		saida.writeBoolean(this.lapide);
 		saida.writeInt(this.id);
 		saida.writeUTF(this.titulo);
 		saida.writeUTF(this.tituloOriginal);
@@ -127,7 +122,6 @@ public class Filme {
 		ByteArrayInputStream dados = new ByteArrayInputStream(bytes);
 		DataInputStream entrada = new DataInputStream(dados);
 
-		this.lapide = entrada.readBoolean();
 		this.id = entrada.readInt();
 		this.titulo = entrada.readUTF();
 		this.tituloOriginal = entrada.readUTF();
@@ -141,8 +135,8 @@ public class Filme {
 
 	public void writeObject(RandomAccessFile raf) throws IOException {
 		byte[] dados = this.getByteArray();
+		raf.writeChar(' ');
 		raf.writeShort(dados.length);
-		System.out.println("TAMANHO = " +dados.length);
 		raf.write(dados);
 	}//end writeObject()
 

@@ -8,8 +8,11 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Crud {
+
+	 
+
 	public static void main(String[] args) {
-		Scanner input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);	
 		int choice = -1;
 
 		RandomAccessFile arq;
@@ -17,6 +20,10 @@ public class Crud {
 		System.out.println("Bem-vindo ao CRUD de filmes!");
 		try{	
 			arq = new RandomAccessFile("filme.db","rw");
+
+			ServiceCrud crud = new ServiceCrud(arq);
+			
+			int id;
 
 			while(choice != 0) { 
 				System.out.println("Menu:\n"+
@@ -33,16 +40,25 @@ public class Crud {
 						System.out.println("Obrigado por utilizar o CRUD de filmes!");
 						break;
 					case 1:
-						ServiceCrud.create(arq);
+						Filme filme = criarObjetoFilme();
+						System.out.println("CRIADO O FILME = "+filme.getTitulo());
+						if(filme != null)
+							crud.create(filme);
 						break;
 					case 2:	
 						//altera
 						break;
 					case 3:
-						ServiceCrud.delete(arq);
+						System.out.print("Insira o ID do filme a ser excluído :");
+						id = input.nextInt();
+						System.out.print("Deseja confirma a exclusão? Insira (1):");
+						if(input.nextByte() == 1)
+							crud.delete(id);
 						break;
 					case 4:
-						ServiceCrud.pesquisa(arq);
+						System.out.print("Insira o ID do filme a ser pesquisado :");
+						id = input.nextInt();
+						crud.read(id);
 						break;
 					default:
 						System.out.println("Opção inválida!");
@@ -53,4 +69,41 @@ public class Crud {
 			ioException.printStackTrace();
 		}
 	}//end main()
+
+	private static Filme criarObjetoFilme(){
+		Scanner input = new Scanner(System.in);
+		String titulo,tituloOriginal,pais,diretor,sinopse;
+		short ano;
+		short min;
+
+		Filme filme = null;
+
+		System.out.print("Titulo: ");
+		titulo = input.nextLine();
+
+		System.out.print("Titulo Original: ");
+		tituloOriginal = input.nextLine();
+
+		System.out.print("Pais de origem: ");
+		pais = input.nextLine();
+
+		System.out.print("Diretor: ");
+		diretor = input.nextLine();
+
+		System.out.print("Sinopse: ");
+		sinopse = input.nextLine();
+
+		System.out.print("Ano: ");
+		ano = input.nextShort();
+
+		System.out.print("Minutos filme: ");
+		min = input.nextShort();
+
+		System.out.print("Insira 1 para confirma inclusão ou 0 para cancelar: ");
+		if(input.nextByte() == 1)
+			filme = new Filme(titulo,tituloOriginal,pais,ano,min,diretor,sinopse);
+		
+		return filme; 
+
+	}
 }//end Crud
