@@ -142,6 +142,7 @@ public class Filme {
 	public void writeObject(RandomAccessFile raf) throws IOException {
 		byte[] dados = this.getByteArray();
 		raf.writeShort(dados.length);
+		System.out.println("TAMANHO = " +dados.length);
 		raf.write(dados);
 	}//end writeObject()
 

@@ -3,14 +3,14 @@
  * */
 
 import java.util.Scanner;
+
 import java.io.*;
 
 public class ServiceCrud{
-	private static Scanner sc;
+	private static Scanner sc = new Scanner(System.in);;
 
 	public static void create(RandomAccessFile arq){
 
-		sc = new Scanner(System.in);
 		String titulo,tituloOriginal,pais,diretor,sinopse;
 		short ano;
 		short min;
@@ -61,61 +61,74 @@ public class ServiceCrud{
 	}//end create()
 
 	public static void delete(RandomAccessFile arq){
-		sc = new Scanner(System.in);
-
+		int pointArq = buscaPointer(arq);
 	}//end delete()
 
 	public static void update(RandomAccessFile arq){
-		sc = new Scanner(System.in);
 
 	}//end update()
 
 	public static void pesquisa (RandomAccessFile arq){
+		
+		long pointerArq = buscaPointer(arq);
+
+		if(pointerArq != 0){
+			try{
+				arq.seek(pointerArq);
+				short tamRegistro = arq.readShort();
+				byte[] registro = new byte[tamRegistro];
+
+				for(short i= 0; i < tamRegistro; i++ )
+					registro[i] = arq.readByte();
+
+				Filme filme = new Filme();
+				filme.setByteArray(registro);
+				System.out.println(filme.toString());
+			}
+			catch(IOException e){
+				e.printStackTrace();
+			}	
+		}
+		else
+			System.out.println("Livro não encontrado!");
+	}//end pesquisa()
+
+	private static long buscaPointer(RandomAccessFile arq){
 		sc = new Scanner(System.in);
 		System.out.print("Insira o ID do filme a ser pesquisado :");
 		int idP = sc.nextInt();
-		boolean continuar = true;
-		short tamVet;
-		byte[] registro;
-		int auxid;
-		Filme aux = new Filme();
 
+		long pointArq = 0;
+		long tamArquivo;
+		boolean continuar = true;
 
 		try{
 
-			if(arq.length() == 0){
+			tamArquivo = arq.length();
+
+			if(tamArquivo == 0)
 				System.out.println("ERRO na pesquisa: Arquivo vazio!");
-			} else {
+			else{
 				arq.seek(4);
+				pointArq = arq.getFilePointer();
+				while(continuar & pointArq < tamArquivo){
+				
+					short tamRegistro = arq.readShort();
+					if(arq.readBoolean() == false && arq.readInt() == idP)
+						continuar = false;
+					else{
+						arq.seek(pointArq);
+						arq.skipBytes(tamRegistro+2);
+						pointArq = arq.getFilePointer();
 
-				while(continuar) {
-					tamVet = arq.readShort();	//le o tam do registro
-					registro = new byte[tamVet];	//cria um vetor de bytes com tamanho do registro
-
-					for(short i = 0; i < tamVet; i++) {	//le byte a byte e grava no vetor
-						registro[i] = arq.readByte();
-					}
-
-					aux.setByteArray(registro);
-					
-					if(!aux.getLapide()) {
-						auxid = aux.getID();
-
-						System.out.println(auxid);
-						if(auxid == idP) {
-							System.out.println("\nO filme pesquisado é:");
-							System.out.println(aux);
-							System.out.println();
-							continuar = false;
-						}
-					}
-					
+					}	
 				}
-			}
-		} catch(EOFException E) { 
-			System.out.println("Filme não encontrado!");
-		} catch(IOException e) {
+			}	
+		}
+		catch(IOException e){
 			e.printStackTrace();
-		} 
-	}//end pesquisa()
-}//end ServiceCrud
+		}
+		return continuar?0:pointArq;
+
+	}
+}
