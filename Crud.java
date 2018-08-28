@@ -39,7 +39,7 @@ public class Crud {
 						//altera
 						break;
 					case 3:
-						//delta
+						ServiceCrud.delete(arq);
 						break;
 					case 4:
 						ServiceCrud.pesquisa(arq);

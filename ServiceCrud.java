@@ -62,6 +62,22 @@ public class ServiceCrud{
 
 	public static void delete(RandomAccessFile arq){
 		long pointArq = buscaPointer(arq);
+		if(pointArq !=0){
+			System.out.print("Deseja confirma a exclusão do filme? 0 para não ou 1 para sim :");
+			byte excluir = sc.nextByte();
+			try{
+				if(excluir == 1){
+					arq.seek(pointArq);
+					arq.skipBytes(2);
+					arq.writeBoolean(true);
+				}
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+			
+		}
+		else
+			System.out.println("Livro não encontrado!");
 	}//end delete()
 
 	public static void update(RandomAccessFile arq){
