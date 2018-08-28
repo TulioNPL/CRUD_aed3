@@ -9,7 +9,7 @@ import java.io.*;
 public class ServiceCrud{
 	private static Scanner sc = new Scanner(System.in);;
 
-	public static void create(RandomAccessFile arq){
+	public static void create(RandomAccessFile arq) throws Exception{
 
 		String titulo,tituloOriginal,pais,diretor,sinopse;
 		short ano;
@@ -60,7 +60,7 @@ public class ServiceCrud{
 		} 
 	}//end create()
 
-	public static void delete(RandomAccessFile arq){
+	public static void delete(RandomAccessFile arq) throws Exception{
 		long pointArq = buscaPointer(arq);
 		if(pointArq !=0){
 			System.out.print("Deseja confirma a exclusão do filme? 0 para não ou 1 para sim :");
@@ -77,14 +77,33 @@ public class ServiceCrud{
 			
 		}
 		else
-			System.out.println("Livro não encontrado!");
+			System.out.println("Filme não encontrado!");
 	}//end delete()
 
-	public static void update(RandomAccessFile arq){
+	public static void update(RandomAccessFile arq) throws Exception{
 		long pointArq = buscaPointer(arq);
+                
+                if(pointArq !=0){
+			System.out.print("Deseja confirmar a alteracao do filme? 0 para não ou 1 para sim :");
+			byte excluir = sc.nextByte();
+			try{
+				if(excluir == 1){
+					arq.seek(pointArq);
+					arq.skipBytes(2);
+					arq.writeBoolean(true);
+                                        create(arq);
+				}
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+			
+		}
+		else
+			System.out.println("Filme não encontrado!");
+                
 	}//end update()
 
-	public static void pesquisa (RandomAccessFile arq){
+	public static void pesquisa (RandomAccessFile arq) throws Exception{
 		
 		long pointerArq = buscaPointer(arq);
 

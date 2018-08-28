@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Crud {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Scanner input = new Scanner(System.in);
 		int choice = -1;
 
@@ -36,7 +36,7 @@ public class Crud {
 						ServiceCrud.create(arq);
 						break;
 					case 2:	
-						//altera
+						ServiceCrud.update(arq);
 						break;
 					case 3:
 						ServiceCrud.delete(arq);
