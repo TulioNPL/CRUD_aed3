@@ -61,7 +61,7 @@ public class ServiceCrud{
 	}//end create()
 
 	public static void delete(RandomAccessFile arq){
-		int pointArq = buscaPointer(arq);
+		long pointArq = buscaPointer(arq);
 	}//end delete()
 
 	public static void update(RandomAccessFile arq){
