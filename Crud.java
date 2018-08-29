@@ -46,6 +46,12 @@ public class Crud {
 							crud.create(filme);
 						break;
 					case 2:	
+						System.out.println("Insira o ID do filme a ser alterado:");
+						id = input.nextInt();
+						System.out.print("Deseja confirma a alteração? Insira (1):");
+						if(input.nextByte() == 1)
+							crud.delete(id);
+						break;
 						//altera
 						break;
 					case 3:

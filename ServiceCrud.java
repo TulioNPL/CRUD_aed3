@@ -48,11 +48,26 @@ public class ServiceCrud{
 			}
 		}
 		else
-			System.out.println("Livro não encontrado!");
+			System.out.println("Filme não encontrado!");
 	}//end delete()
 
 	public  void update(int id){
 		long pointArq = searchPointer(id);
+
+		
+		if(pointArq !=0){
+			
+			try{
+				arq.seek(pointArq);
+				arq.writeChar('*');
+				create(arq);
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		}
+		else
+			System.out.println("Filme não encontrado!");
+
 	}//end update()
 
 	public  void read(int id){
@@ -80,9 +95,7 @@ public class ServiceCrud{
 			}
 		}
 		else
-		System.out.println("Livro não encontrado!");
-		
-
+		System.out.println("Filme não encontrado!");		
 	}//end pesquisa()
 
 	private long searchPointer(int id){
