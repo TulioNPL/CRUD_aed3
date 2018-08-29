@@ -4,41 +4,19 @@
 
 import java.util.Scanner;
 
+
 import java.io.*;
 
 public class ServiceCrud{
-	private static Scanner sc = new Scanner(System.in);;
+	private  Scanner sc = new Scanner(System.in);
 
-	public static void create(RandomAccessFile arq) throws Exception{
+	private RandomAccessFile arq;
 
-		String titulo,tituloOriginal,pais,diretor,sinopse;
-		short ano;
-		short min;
+	public ServiceCrud(RandomAccessFile arq){
+		this.arq = arq;
+	}
 
-		System.out.print("Titulo: ");
-		titulo = sc.nextLine();
-
-		System.out.print("Titulo Original: ");
-		tituloOriginal = sc.nextLine();
-
-		System.out.print("Pais de origem: ");
-		pais = sc.nextLine();
-
-		System.out.print("Diretor: ");
-		diretor = sc.nextLine();
-
-		System.out.print("Sinopse: ");
-		sinopse = sc.nextLine();
-
-		System.out.print("Ano: ");
-		ano = sc.nextShort();
-
-		System.out.print("Minutos filme: ");
-		min = sc.nextShort();
-
-		System.out.print("Insira 1 para confirma inclusão ou 0 para cancelar: ");
-		if(sc.nextByte() == 1){
-
+	public  void create(Filme filme){
 			int id;
 			try{
 				if(arq.length() == 0)
@@ -48,112 +26,103 @@ public class ServiceCrud{
 					id = arq.readInt();
 					id++;
 				}
-
 				arq.seek(0);
 				arq.writeInt(id);
 				arq.seek(arq.length());
-				Filme filme = new Filme(titulo,tituloOriginal,pais,ano,min,diretor,sinopse,id);
+				filme.setId(id);
 				filme.writeObject(arq);
 			} catch(Exception e) {
 				e.printStackTrace();
 			}	
-		} 
 	}//end create()
 
-	public static void delete(RandomAccessFile arq) throws Exception{
-		long pointArq = buscaPointer(arq);
+	public void delete(int id){
+		long pointArq = searchPointer(id);
 		if(pointArq !=0){
-			System.out.print("Deseja confirma a exclusão do filme? 0 para não ou 1 para sim :");
-			byte excluir = sc.nextByte();
+			
 			try{
-				if(excluir == 1){
-					arq.seek(pointArq);
-					arq.skipBytes(2);
-					arq.writeBoolean(true);
-				}
+				arq.seek(pointArq);
+				arq.writeChar('*');
 			}catch(IOException e){
 				e.printStackTrace();
 			}
-			
 		}
 		else
 			System.out.println("Filme não encontrado!");
 	}//end delete()
 
-	public static void update(RandomAccessFile arq) throws Exception{
-		long pointArq = buscaPointer(arq);
-                
-                if(pointArq !=0){
-			System.out.print("Deseja confirmar a alteracao do filme? 0 para não ou 1 para sim :");
-			byte excluir = sc.nextByte();
+	public  void update(int id){
+		long pointArq = searchPointer(id);
+		
+		if(pointArq !=0){
+			
 			try{
-				if(excluir == 1){
-					arq.seek(pointArq);
-					arq.skipBytes(2);
-					arq.writeBoolean(true);
-                                        create(arq);
-				}
+				arq.seek(pointArq);
+				arq.writeChar('*');
+				create(arq);
 			}catch(IOException e){
 				e.printStackTrace();
 			}
-			
 		}
 		else
 			System.out.println("Filme não encontrado!");
-                
 	}//end update()
 
-	public static void pesquisa (RandomAccessFile arq) throws Exception{
-		
-		long pointerArq = buscaPointer(arq);
+	public  void read(int id){
+		long pointerArq = searchPointer(id);
 
 		if(pointerArq != 0){
 			try{
 				arq.seek(pointerArq);
-				short tamRegistro = arq.readShort();
-				byte[] registro = new byte[tamRegistro];
-
-				for(short i= 0; i < tamRegistro; i++ )
+				arq.skipBytes(2);
+				
+				int tam = arq.readShort();
+	
+				byte[] registro = new byte[tam];
+	
+				for(short i = 0 ; i < tam; i++)
 					registro[i] = arq.readByte();
-
-				Filme filme = new Filme();
+				
+				Filme filme  = new Filme();
+	
 				filme.setByteArray(registro);
 				System.out.println(filme.toString());
-			}
-			catch(IOException e){
+	
+			}catch(IOException e ){
 				e.printStackTrace();
-			}	
+			}
 		}
 		else
-			System.out.println("Livro não encontrado!");
+		System.out.println("Filme não encontrado!");
+		
+
 	}//end pesquisa()
 
-	private static long buscaPointer(RandomAccessFile arq){
-		sc = new Scanner(System.in);
-		System.out.print("Insira o ID do filme a ser pesquisado :");
-		int idP = sc.nextInt();
+	private long searchPointer(int id){
 
 		long pointArq = 0;
 		long tamArquivo;
 		boolean continuar = true;
 
 		try{
-
 			tamArquivo = arq.length();
 
 			if(tamArquivo == 0)
-				System.out.println("ERRO na pesquisa: Arquivo vazio!");
+				System.out.println("ERRO : Arquivo vazio!");
 			else{
 				arq.seek(4);
 				pointArq = arq.getFilePointer();
 				while(continuar & pointArq < tamArquivo){
-				
+					
+					char lapide = arq.readChar();
+					
 					short tamRegistro = arq.readShort();
-					if(arq.readBoolean() == false && arq.readInt() == idP)
+
+					if(lapide != '*' && arq.readInt() == id )
 						continuar = false;
 					else{
 						arq.seek(pointArq);
-						arq.skipBytes(tamRegistro+2);
+						arq.skipBytes(tamRegistro+4);
 						pointArq = arq.getFilePointer();
 
 					}	
