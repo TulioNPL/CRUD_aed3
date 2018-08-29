@@ -53,6 +53,7 @@ public class ServiceCrud{
 
 	public  void update(int id){
 		long pointArq = searchPointer(id);
+
 		
 		if(pointArq !=0){
 			
@@ -66,6 +67,7 @@ public class ServiceCrud{
 		}
 		else
 			System.out.println("Filme não encontrado!");
+
 	}//end update()
 
 	public  void read(int id){
@@ -93,9 +95,7 @@ public class ServiceCrud{
 			}
 		}
 		else
-		System.out.println("Filme não encontrado!");
-		
-
+		System.out.println("Filme não encontrado!");		
 	}//end pesquisa()
 
 	private long searchPointer(int id){
