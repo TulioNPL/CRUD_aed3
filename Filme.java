@@ -16,17 +16,17 @@ public class Filme {
 	public Filme() {
 	}//end Filme()
 
-	public Filme(String titulo, String tituloOriginal, String pais, short ano, short duracao, String diretor, String sinopse,int id) {
-		this.titulo = titulo;
-		this.tituloOriginal = tituloOriginal;
-		this.pais = pais;
-		this.ano = ano;
-		this.duracao = duracao;
-		this.diretor = diretor;
-		this.sinopse = sinopse;
-		this.id = id;
-	}//end Filme()
-
+	/*
+	 * Construtor da classe
+	 * @param titulo do filme
+	 * @param titulo Original do filme
+	 * @param pais em que foi produzido
+	 * @param ano de lancamento
+	 * @param duracao em min do filme
+	 * @param diretor do filme
+	 * @param sinopse oficial do filme
+	 * @return Instancia de filme criada com parametros selecionados
+	 * */
 	public Filme(String titulo, String tituloOriginal, String pais, short ano, short duracao, String diretor, String sinopse) {
 		this.titulo = titulo;
 		this.tituloOriginal = tituloOriginal;
@@ -100,7 +100,12 @@ public class Filme {
 	public int getID() {
 		return this.id;
 	}
-	
+
+	/*
+	 * Retorna um vetor de bytes(registro) do Filme corrente
+	 * @return vetor de bytes do registro
+	 * @throws IOException
+	 * */	
 	public byte[] getByteArray() throws IOException {
 		ByteArrayOutputStream dados = new ByteArrayOutputStream();
 		DataOutputStream saida = new DataOutputStream(dados);
@@ -118,6 +123,11 @@ public class Filme {
 		return dados.toByteArray();
 	}//end getByteArray()
 
+	/*
+	 * Recebe um vetor de bytes com informacoes de um filme e seta no Filme corrente
+	 * @param vetor de bytes com informacoes de um filme do arquivo
+	 * @throws IOException
+	 * */
 	public void setByteArray(byte[] bytes) throws IOException {
 		ByteArrayInputStream dados = new ByteArrayInputStream(bytes);
 		DataInputStream entrada = new DataInputStream(dados);
@@ -133,6 +143,11 @@ public class Filme {
 		
 	}//end setByteArray()
 
+	/*
+	 * Escreve o objeto filme no arquivo
+	 * @param Instancia de RAF com o arquivo aberto
+	 * @throws IOException
+	 * */
 	public void writeObject(RandomAccessFile raf) throws IOException {
 		byte[] dados = this.getByteArray();
 		raf.writeChar(' ');
@@ -140,6 +155,10 @@ public class Filme {
 		raf.write(dados);
 	}//end writeObject()
 
+	/*
+	 * Retorna uma String com as informacoes do filme
+	 * @return Classe corrente em formato de string
+	 * */
 	public String toString(){
 		return "Titulo: "+this.titulo+
 			"\nTitulo Original: "+this.tituloOriginal+
@@ -151,4 +170,4 @@ public class Filme {
 			"\nID: "+this.id;
 
 	}//end toString()
-}
+}//end Filme
