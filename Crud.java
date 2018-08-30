@@ -57,7 +57,7 @@ public class Crud {
 						break;
 					case 4:
 						System.out.print("Insira o ID do filme a ser pesquisado: ");
-						crud.read( id = input.nextInt() );
+						crud.read( input.nextInt() );
 						
 						break;
 					default:
