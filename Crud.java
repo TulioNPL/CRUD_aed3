@@ -47,26 +47,18 @@ public class Crud {
 						break;
 					case 2:	
 						System.out.println("Insira o ID do filme a ser alterado: ");
-						id = input.nextInt();
-						System.out.print("Deseja confirmar a alteração? Insira (1): ");
-						if(input.nextByte() == 1) {
-							crud.update(id);
-						}
+						crud.update( input.nextInt() );
+						
 						break;
 					case 3:
 						System.out.print("Insira o ID do filme a ser excluído: ");
-						id = input.nextInt();
-						System.out.print("Deseja confirmar a exclusão? Insira (1): ");
-
-						if(input.nextByte() == 1) {
-							crud.delete(id);
-						}
+						crud.delete( input.nextInt() );
 
 						break;
 					case 4:
 						System.out.print("Insira o ID do filme a ser pesquisado: ");
-						id = input.nextInt();
-						crud.read(id);
+						crud.read( id = input.nextInt() );
+						
 						break;
 					default:
 						System.out.println("Opção inválida!");
