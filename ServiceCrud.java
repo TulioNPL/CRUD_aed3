@@ -8,7 +8,6 @@ import java.util.Scanner;
 import java.io.*;
 
 public class ServiceCrud{
-	private  Scanner sc = new Scanner(System.in);
 
 	private RandomAccessFile arq;
 
@@ -25,7 +24,7 @@ public class ServiceCrud{
 	 * @param uma instancia de filme a ser gravada
 	 * @param id do filme a ser gravado
 	 * */
-	public  void create(Filme filme, int id){
+	public void create(Filme filme, int id){
 		try {
 			if(id == -1) {
 				if(arq.length() == 0) {
@@ -51,12 +50,19 @@ public class ServiceCrud{
 	 * @param id do filme a ser deletado
 	 * */
 	public void delete(int id){
+		Scanner input = new Scanner(System.in);
 		long pointArq = searchPointer(id);
-		if(pointArq !=0){
 
+		if(pointArq !=0){
 			try{
-				arq.seek(pointArq);
-				arq.writeChar('*');
+				read(pointArq);
+				System.out.println("Deseja confirmar a exclusão? Insira (1): ");
+				if( input.nextByte() == 1 ){
+					arq.seek(pointArq);
+					arq.writeChar('*');
+				}
+				else
+					System.out.println("Exclusão cancelada!");
 			}catch(IOException e){
 				e.printStackTrace();
 			}
@@ -69,16 +75,20 @@ public class ServiceCrud{
 	 * Altera as informacoes do filme selecionado
 	 * @param id do filme a ser alterado
 	 * */
-	public  void update(int id){
+	public void update(int id){
+		Scanner input = new Scanner(System.in);
 		long pointArq = searchPointer(id);
 
 		if(pointArq !=0){
-
 			try{
-				arq.seek(pointArq);
-				arq.writeChar('*');
-				Filme filme = criarObjetoFilme();
-				create(filme,id);
+				read(pointArq);
+				System.out.println("Deseja confirmar a alteração? Insira (1): ");
+				if( input.nextByte() == 1 ){
+					arq.seek(pointArq);
+					arq.writeChar('*');
+					Filme filme = criarObjetoFilme();
+					create(filme,id);
+				}
 			}catch(IOException e){
 				e.printStackTrace();
 			}
@@ -89,12 +99,20 @@ public class ServiceCrud{
 	}//end update()
 
 	/*
-	 * Pesquisa as informacoes de um filme no arquivo
-	 * @param id do filme a ser pesquisado
-	 * */
+	 * Sobrecarga no metodo de leitura
+	 * @param id do filme pesquisado
+	 * Pesquisa por id antes de ler o Filme
+	 */
 	public void read(int id){
-		long pointerArq = searchPointer(id);
+		read( searchPointer(id) );
+	}
 
+	/*
+	 * Pesquisa as informacoes de um filme no arquivo
+	 * @param endereço do ponteiro do filme pesquisado
+	 **/
+	public void read(long pointerArq){
+		
 		if(pointerArq != 0){
 			try{
 				arq.seek(pointerArq);
